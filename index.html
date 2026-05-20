@@ -75,13 +75,11 @@ nav {
   z-index: 100;
   background: rgba(9,21,96,0.6);
 }
-.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.nav-logo-icon {
-  width: 40px; height: 40px;
-  background: var(--green);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px;
+.nav-logo { display: flex; align-items: center; text-decoration: none; }
+.nav-logo-img {
+  width: auto; height: 30px;
+  object-fit: contain;
+  margin-right: 8px;
 }
 .nav-logo-text {
   font-size: 22px;
@@ -215,6 +213,7 @@ nav {
   outline: none;
   transition: all 0.2s;
   -webkit-appearance: none;
+  appearance: none;
 }
 .input-wrap input::placeholder { color: rgba(255,255,255,0.3); }
 .input-wrap input:focus,
@@ -561,19 +560,18 @@ footer {
 
 <div class="wrapper">
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <!-- Reemplazamos el div del carrito por tu imagen -->
-    <img src="isologo verde zuply.png" alt="Logo Zuply" class="nav-logo-img">
-    <span class="nav-logo-text">Zuply</span>
-  </a>
-  <div class="nav-badge">🚀 Próximamente</div>
-</nav>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="isologo verde zuply.png" alt="Logo Zuply" class="nav-logo-img">
+      <span class="nav-logo-text">Zuply</span>
+    </a>
+    <div class="nav-badge">🚀 Próximamente</div>
+  </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-tag">Tu despensa inteligente · Diciembre 2026</div>
+    <div class="hero-tag">Tu despensa inteligente</div>
 
     <h1>
       Compra más inteligente.<br>
@@ -581,13 +579,13 @@ footer {
     </h1>
 
     <p class="hero-sub">
-      Zuply compara los precios de tu lista completa en los 5 supermercados grandes de Chile y te dice dónde te conviene comprar. Sin drama. Sin vueltas.
+      Zuply compara los precios de tu lista completa en los 5 supermercados más grandes de Chile y te dice dónde te conviene comprar. Sin drama. Sin vueltas.
     </p>
 
     <!-- SIGNUP FORM -->
     <div class="signup-box">
       <h3>¿Quieres ser el primero en saberlo? 👀</h3>
-      <p>Déjanos tus datos y te avisamos apenas Zuply esté disponible.</p>
+      <p>Déjanos tus datos y te avisamos apenas Zuply esté disponible 🤙🏻.</p>
 
       <div id="form-content">
         <div class="form-fields">
