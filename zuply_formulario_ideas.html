@@ -484,14 +484,35 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
   const TOTAL = 7;
   const answers = {};
 
-  function toggle(btn, q) {
-    btn.classList.toggle('selected');
-    const all = btn.closest('.options').querySelectorAll('.opt.selected');
-    const cnt = all.length;
+  function toggle(el, q) {
+  // Si es un input de texto
+  if (el.tagName === "INPUT") {
+    const options = el.closest('.options');
+    const selectedBtns = options.querySelectorAll('.opt.selected');
+    let cnt = selectedBtns.length;
+    // Si el input tiene texto, cuenta como una selección más
+    if (el.value.trim() !== "") {
+      cnt += 1;
+    }
     document.getElementById('cnt' + q).textContent = cnt;
     document.getElementById('n' + q).disabled = cnt === 0;
-    answers['q' + q] = Array.from(all).map(o => o.textContent.trim().replace(/\s+/g,' '));
+    // Guardar respuestas
+    const answersList = Array.from(selectedBtns).map(o => o.textContent.trim().replace(/\s+/g,' '));
+    if (el.value.trim() !== "") {
+      answersList.push(el.value.trim());
+    }
+    answers['q' + q] = answersList;
+    return;
   }
+
+  // Lógica original para botones
+  el.classList.toggle('selected');
+  const all = el.closest('.options').querySelectorAll('.opt.selected');
+  const cnt = all.length;
+  document.getElementById('cnt' + q).textContent = cnt;
+  document.getElementById('n' + q).disabled = cnt === 0;
+  answers['q' + q] = Array.from(all).map(o => o.textContent.trim().replace(/\s+/g,' '));
+}
 
   function next(q) {
     document.getElementById('s' + q).classList.remove('active');
