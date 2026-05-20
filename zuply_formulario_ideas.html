@@ -136,18 +136,21 @@ body::after {
 /* ── OPTIONS ── */
 .options { display:flex; flex-direction:column; gap:10px; }
 .options.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-/* Estilo para la opción personalizada */
+
+/* Opción personalizada */
 .custom-opt {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 6px;
-  padding: 10px;
-  margin-top: 8px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: text; /* se siente como campo editable */
 }
-
+.custom-opt:hover {
+  border-color: var(--green); /* mismo efecto hover que los botones */
+}
 .opt-input {
   flex: 1;
   background: transparent;
@@ -156,10 +159,11 @@ body::after {
   color: #fff;
   font-size: 14px;
 }
-
 .opt-input::placeholder {
   color: rgba(255,255,255,0.4);
+  font-style: italic;
 }
+  
 .opt {
   display:flex; align-items:center; gap:13px;
   padding:14px 16px;
@@ -331,7 +335,10 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
         <button class="opt" onclick="toggle(this,1)"><span class="opt-check"></span><span class="opt-emoji">📱</span> No hay una app buena para esto en Chile</button>
         <div class="opt custom-opt">
           <span class="opt-emoji">✍️</span>
-          <input type="text" name="frustracion_otro" placeholder="222Escribe tu propia frustración..." />
+          <input type="text" 
+                 name="frustracion_otro" 
+                 placeholder="Escribe tu propia frustración..." 
+                 class="opt-input" />
         </div>
       </div>
       <div class="nav">
