@@ -356,8 +356,12 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
         <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">📵</span> Ver mi lista sin necesitar internet en el pasillo</button>
         <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🧾</span> Escanear la boleta para registrar lo que compré</button>
         <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">📊</span> Ver cuánto gasto mes a mes y en qué</button>
-        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🏠</span> Lista sugerida automáticamente según mi tipo de hogar</button>
+        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🏠</span> Lista sugerida automáticamente según la composición de mi hogar</button>
         <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🚚</span> Pedir delivery directo desde la app</button>
+        <div class="opt custom-opt">
+          <span class="opt-emoji">✍️</span>
+          <input type="text" name="funcionalidades_otro" placeholder="Escribe la funcionalidad que te gustaría ver..." class="opt-input" oninput="toggle(this,1)" />
+        </div>
       </div>
       <div class="nav">
         <button class="btn-back" onclick="back(2)">← Atrás</button>
