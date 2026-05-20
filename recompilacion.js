@@ -1,0 +1,36 @@
+const formulario = document.querySelector('form');
+
+formulario.addEventListener('submit', async (e) => {
+    e.preventDefault(); // Evita que la página se vuelva loca y se recargue
+
+    // Recolectamos los datos de tus inputs (asegúrate de que los IDs coincidan con tu HTML)
+    const datosUsuario = {
+        nombre: document.querySelector('#nombre').value,
+        email: document.querySelector('#email').value,
+        comuna: document.querySelector('#comuna').value
+    };
+
+    try {
+        // Hacemos el envío silencioso a Google Sheets
+        const respuesta = await fetch('TU_URL_DE_GOOGLE_APPS_SCRIPT_AQUÍ', {
+            method: 'POST',
+            mode: 'cors', // Evita problemas de bloqueo del navegador
+            headers: {
+                'Content-Type': 'text/plain', // Google prefiere text/plain para Apps Scripts
+            },
+            body: JSON.stringify(datosUsuario)
+        });
+
+        const resultado = await respuesta.json();
+
+        if (resultado.status === 'success') {
+            alert('¡Registrado con éxito! Te avisaremos apenas estemos listos.');
+            formulario.reset(); // Limpia el formulario en la pantalla
+        } else {
+            alert('Hubo un problema. Inténtalo de nuevo.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error de conexión.');
+    }
+});
