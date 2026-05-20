@@ -534,20 +534,25 @@ footer {
 /* Footer en pantallas pequeñas (teléfonos) */
 @media (max-width: 480px) {
   footer {
-    flex-direction: column;   /* apila todo en vertical */
-    align-items: flex-start;  /* alinea a la izquierda */
-    padding: 20px;            /* menos padding */
-    gap: 20px;                /* espacio entre bloques */
+    flex-direction: column;   /* apila en vertical */
+    align-items: center;      /* centra horizontalmente */
+    text-align: center;       /* centra el texto */
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .footer-logo,
+  .footer-sub,
+  .footer-right,
+  .footer-social {
+    justify-content: center;  /* centra cada sección */
+    width: 100%;              /* ocupa todo el ancho */
   }
 
   .footer-logo-text { font-size: 14px; }
-  .footer-sub { font-size: 10px; }
+  .footer-sub { font-size: 11px; }
   .footer-right { font-size: 11px; }
-  .footer-social {
-    justify-content: flex-start;
-    flex-wrap: wrap;          /* redes se acomodan en varias filas */
-    gap: 10px;
-  }
+  .footer-social { flex-wrap: wrap; gap: 10px; }
 }
   
 /* ─── ANIMATIONS ─── */
