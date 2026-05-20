@@ -531,6 +531,28 @@ footer {
 }
 .social-link:hover { color: var(--green); }
 
+/* Footer en pantallas pequeñas */
+@media (max-width: 768px) {
+  footer {
+    flex-direction: column;   /* apila los elementos */
+    align-items: flex-start;  /* alinea a la izquierda */
+    padding: 20px;            /* menos padding */
+    gap: 20px;                /* más espacio entre bloques */
+  }
+  .footer-logo-text {
+    font-size: 14px;          /* texto más pequeño */
+  }
+  .footer-sub {
+    font-size: 10px;
+  }
+  .footer-right {
+    font-size: 11px;
+  }
+  .footer-social {
+    justify-content: flex-start; /* redes alineadas a la izquierda */
+  }
+}
+  
 /* ─── ANIMATIONS ─── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
