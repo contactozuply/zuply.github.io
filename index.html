@@ -813,8 +813,8 @@ footer {
   }, { threshold: 0.1 });
   reveals.forEach(el => revealObserver.observe(el));
 
-  // Form submit
-  function handleSignup() {
+  // Form submit CON CONEXIÓN REAL A GOOGLE SHEETS
+  async function handleSignup() {
     const nombre = document.getElementById('nombre').value.trim();
     const email = document.getElementById('email').value.trim();
     const comuna = document.getElementById('comuna').value;
@@ -839,10 +839,36 @@ footer {
       return;
     }
 
-    // Show success
-    document.getElementById('form-content').style.display = 'none';
-    document.getElementById('success-state').style.display = 'block';
-    console.log('Lead Zuply:', { nombre, email, comuna });
+    // --- AQUÍ EMPIEZA EL ENVÍO REAL ---
+    console.log('Enviando Lead Zuply...', { nombre, email, comuna });
+    
+    const datosUsuario = { nombre, email, comuna };
+
+    try {
+      // Enviamos los datos al backend oculto de Google
+      const respuesta = await fetch('TU_NUEVA_URL_DE_GOOGLE_APPS_SCRIPT_AQUÍ', {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+        body: JSON.stringify(datosUsuario)
+      });
+
+      const resultado = await respuesta.json();
+
+      if (resultado.status === 'success') {
+        // Si Google guardó todo bien, recién ahí mostramos el estado de éxito en la pantalla
+        document.getElementById('form-content').style.display = 'none';
+        document.getElementById('success-state').style.display = 'block';
+      } else {
+        alert('Hubo un problema en el servidor de registro. Inténtalo de nuevo.');
+      }
+
+    } catch (error) {
+      console.error('Error al enviar los datos:', error);
+      alert('Error de conexión. Revisa tu internet e inténtalo de nuevo.');
+    }
   }
 
   // Shake keyframe
