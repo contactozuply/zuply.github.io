@@ -350,14 +350,11 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
       <div class="q-text">¿Qué funciones te parecen más útiles para Zuply? 🛠️</div>
       <div class="q-hint">Marca las que más te generan valor.</div>
       <div class="options">
-        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🤖</span> Comparador IA que busca el mejor precio total de mi lista</button>
+        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🤖</span> IA que optimiza el precio de mi lista</button>
         <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">💾</span> Lista guardada que se actualiza sola mes a mes</button>
-        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🔔</span> Alerta cuando baja el precio de un producto que compro</button>
         <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">📵</span> Ver mi lista sin necesitar internet en el pasillo</button>
         <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🧾</span> Escanear la boleta para registrar lo que compré</button>
         <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">📊</span> Ver cuánto gasto mes a mes y en qué</button>
-        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🏠</span> Lista sugerida automáticamente según la composición de mi hogar</button>
-        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🚚</span> Pedir delivery directo desde la app</button>
         <div class="opt custom-opt">
           <span class="opt-emoji">✍️</span>
           <input type="text" name="funcionalidades_otro" placeholder="Escribe la funcionalidad que te gustaría ver..." class="opt-input" oninput="toggle(this,1)" />
@@ -383,7 +380,10 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
         <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">🟡</span> Tottus</button>
         <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">🛒</span> Mayorista 10</button>
         <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">🏪</span> Acuenta</button>
-        <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">➕</span> Otros / tiendas locales</button>
+        <div class="opt custom-opt">
+          <span class="opt-emoji">✍️</span>
+          <input type="text" name="supermercados_otro" placeholder="Escribe el supermercado / tienda local que te gustaría ver..." class="opt-input" oninput="toggle(this,1)" />
+        </div>
       </div>
       <div class="nav">
         <button class="btn-back" onclick="back(3)">← Atrás</button>
@@ -401,9 +401,12 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
         <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">📉</span> Cuando baje el precio de algún producto de mi lista</button>
         <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">🏷️</span> Cuando haya 2x1 o descuento en productos que compro</button>
         <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">📅</span> Recordatorio semanal para planificar la compra</button>
-        <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">🏆</span> Resumen mensual de cuánto ahorré con Zuply</button>
-        <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">🚨</span> Cuando haya un supermercado claramente más barato esta semana</button>
-        <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">🙅</span> Prefiero no recibir notificaciones</button>
+        <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">🏆</span> Reporte mensual de cuánto ahorré con Zuply</button>
+        <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">🚨</span> Cuando haya un supermercado más barato esta semana</button>
+        <div class="opt custom-opt">
+          <span class="opt-emoji">✍️</span>
+          <input type="text" name="notificaciones_otro" placeholder="Qué otra notificación te gustaría recibir..." class="opt-input" oninput="toggle(this,1)" />
+        </div>
       </div>
       <div class="nav">
         <button class="btn-back" onclick="back(4)">← Atrás</button>
@@ -418,13 +421,18 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
       <div class="q-text">¿Qué haría que valiese la pena pagar por Zuply? 💎</div>
       <div class="q-hint">Selecciona lo que te convencería de suscribirte.</div>
       <div class="options">
-        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">♾️</span> Comparaciones ilimitadas (sin tope mensual)</button>
-        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">🏪</span> Ver todos los supermercados, no solo los 3 principales</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">♾️</span> Listas ilimitadas</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">🏠</span> Lista sugerida según la composición de mi hogar</button>
+        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🚚</span> Pedir delivery directo desde la app</button>
         <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">📜</span> Historial completo de mis compras y listas anteriores</button>
         <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">📉</span> Alertas de precios en tiempo real</button>
-        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">👨‍👩‍👧</span> Gestionar listas de más de un hogar (familia)</button>
-        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">🤝</span> Compartir la lista con mi pareja o familia en tiempo real</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">🤝</span> Compartir la lista con mi núcleo familiar</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">👩🏻‍🍳🧑🏻‍🍳</span> Listas de compras basadas en recetas de cocina</button>
         <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">🆓</span> Solo la usaría si es completamente gratis</button>
+        <div class="opt custom-opt">
+          <span class="opt-emoji">✍️</span>
+          <input type="text" name="premium_otro" placeholder="Qué otra función premium crees que vale la pena pagar..." class="opt-input" oninput="toggle(this,1)" />
+        </div>
       </div>
       <div class="nav">
         <button class="btn-back" onclick="back(5)">← Atrás</button>
@@ -439,7 +447,7 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
       <div class="q-text">¿Desde dónde usarías Zuply principalmente? 📱</div>
       <div class="q-hint">Elige todos los que apliquen.</div>
       <div class="options grid">
-        <button class="opt" onclick="toggle(this,6)"><span class="opt-check"></span><span class="opt-emoji">🍎</span> iPhone (iOS)</button>
+        <button class="opt" onclick="toggle(this,6)"><span class="opt-check"></span><span class="opt-emoji">🍏</span> iPhone (iOS)</button>
         <button class="opt" onclick="toggle(this,6)"><span class="opt-check"></span><span class="opt-emoji">🤖</span> Android</button>
         <button class="opt" onclick="toggle(this,6)"><span class="opt-check"></span><span class="opt-emoji">💻</span> Computador / web</button>
         <button class="opt" onclick="toggle(this,6)"><span class="opt-check"></span><span class="opt-emoji">📟</span> Tablet</button>
@@ -476,7 +484,7 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
         <h2>¡Eres parte de Zuply!</h2>
         <p>Tu opinión quedó registrada y va directo al equipo que está construyendo la app. Esto es exactamente lo que necesitamos para construir algo que valga la pena.</p>
         <div class="ty-tags" id="ty-tags"></div>
-        <div class="ty-brand"><span>🛒</span> @zuply_cl · Tu despensa inteligente</div>
+        <div class="ty-brand"><span>🛒</span> Zuply · Tu despensa inteligente</div>
       </div>
     </div>
 
@@ -551,21 +559,6 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
     document.getElementById('s7').classList.remove('active');
     document.getElementById('sdone').classList.add('active');
     document.getElementById('prog').style.width = '100%';
-
-    // Build tag cloud from top selections
-    const tags = [];
-    if (answers.q2) answers.q2.slice(0, 3).forEach(r => {
-      const emoji = r.match(/[^\x00-\x7F]+/)?.[0] || '✓';
-      const txt = r.replace(/[^\x00-\x7F]+/g, '').trim().split(' ').slice(0,4).join(' ');
-      tags.push(`${emoji} ${txt}`);
-    });
-    const container = document.getElementById('ty-tags');
-    tags.forEach(t => {
-      const el = document.createElement('div');
-      el.className = 'ty-tag';
-      el.textContent = t;
-      container.appendChild(el);
-    });
 
     console.log('Zuply Ideas Form:', answers);
   }
