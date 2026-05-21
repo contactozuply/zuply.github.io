@@ -1,5 +1,5 @@
 // URL de tu Apps Script publicado
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby5LChdZKruNxKxkjIJBe_tNvCZMs6s6s-Oy7CoSy0c1uBfrGtDYXJxYGEkWaRv2F7pPA/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxnYoMc2BWS1a0-xjd5KSpVSJPujjDbBDO6sTdS9LMx8v9S0v-QOzby7uGC9lEls0uyaQ/exec";
 
 // Función que anima el contador desde 0 hasta el número target
 function animateCounter(element, target) {
