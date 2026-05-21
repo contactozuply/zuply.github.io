@@ -4,7 +4,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-5b_ex1P2ZVOKtrLqM
 // Animación
 function animateCounter(element, target) {
   let current = 0;
-  const step = Math.max(1, Math.ceil(target / 100));
+  const step = Math.max(1, Math.ceil(target / 50));
   const interval = setInterval(() => {
     current += step;
     if (current >= target) {
