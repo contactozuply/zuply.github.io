@@ -1,5 +1,5 @@
 // URL de tu Apps Script publicado
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxnYoMc2BWS1a0-xjd5KSpVSJPujjDbBDO6sTdS9LMx8v9S0v-QOzby7uGC9lEls0uyaQ/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz-5b_ex1P2ZVOKtrLqMAKgVwr7IogVBTBgpL1xwqTVVlWyqoYNmM8wxqgP1xjB8VNiyA/exec";
 
 // Animación
 function animateCounter(element, target) {
