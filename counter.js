@@ -16,6 +16,10 @@ function updateCounter(data) {
   document.getElementById("cnt-1").textContent = data.count;
 }
 
+function updateCounter(data) {
+  document.getElementById("cnt-1").textContent = data.count;
+}
+
 // Función para incrementar el contador al enviar formulario
 function enviarFormulario() {
   fetch(SCRIPT_URL, {method: "POST"})
