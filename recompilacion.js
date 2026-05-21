@@ -26,6 +26,9 @@ formulario.addEventListener('submit', async (e) => {
         if (resultado.status === 'success') {
             alert('¡Registrado con éxito! Te avisaremos apenas estemos listos.');
             formulario.reset(); // Limpia el formulario en la pantalla
+        
+            // 👇 CAMBIO: incrementa el contador
+            handleSignup();
         } else {
             alert('Hubo un problema. Inténtalo de nuevo.');
         }
