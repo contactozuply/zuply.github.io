@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
       loadCounter(); // primera carga
       cntObserver.disconnect();
 
-      // 👇 Polling cada 5 segundos
-      setInterval(loadCounter, 5000);
+      // 👇 Polling cada 10 segundos
+      setInterval(loadCounter, 10000);
     }
   });
   cntObserver.observe(cntEl);
