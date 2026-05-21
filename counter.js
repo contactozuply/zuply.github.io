@@ -6,6 +6,7 @@ function loadCounter() {
   fetch(SCRIPT_URL)
     .then(res => res.json())
     .then(data => {
+      console.log("Respuesta del script (GET):", data); // 👈 aquí ves qué devuelve
       document.getElementById("cnt-1").textContent = data.count;
     })
     .catch(err => console.error("Error cargando contador:", err));
@@ -16,6 +17,7 @@ function enviarFormulario() {
   fetch(SCRIPT_URL, {method: "POST"})
     .then(res => res.json())
     .then(data => {
+      console.log("Respuesta del script (POST):", data); // 👈 aquí ves qué devuelve
       document.getElementById("cnt-1").textContent = data.count;
     })
     .catch(err => console.error("Error incrementando contador:", err));
