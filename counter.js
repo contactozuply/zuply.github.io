@@ -28,24 +28,13 @@ function loadCounter() {
   document.body.appendChild(script);
 }
 
-// Incrementar al enviar formulario
-function enviarFormulario() {
-  fetch(SCRIPT_URL, {method: "POST"})
-    .then(res => res.json())
-    .then(data => {
-      const cntEl = document.getElementById("cnt-1");
-      animateCounter(cntEl, data.count);
-    })
-    .catch(err => console.error("Error incrementando contador:", err));
-}
-
-// 👇 Observador: dispara la carga solo cuando el contador entra en pantalla
+// Observador: dispara la carga solo cuando el contador entra en pantalla
 document.addEventListener("DOMContentLoaded", () => {
   const cntEl = document.getElementById("cnt-1");
   const cntObserver = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting) {
       loadCounter();
-      cntObserver.disconnect(); // solo una vez
+      cntObserver.disconnect();
     }
   });
   cntObserver.observe(cntEl);
