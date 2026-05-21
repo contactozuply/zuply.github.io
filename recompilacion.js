@@ -12,7 +12,7 @@ formulario.addEventListener('submit', async (e) => {
 
     try {
         // Hacemos el envío silencioso a Google Sheets
-        const respuesta = await fetch('https://script.google.com/macros/s/AKfycbyLM6HN_Dad5sU4ae3RGH_WZ3Nfuhi_YT4FOzgX1sq33yGA8PgnHzEGD-AIMgtpOcL9/exec', {
+        const respuesta = await fetch('https://script.google.com/macros/s/AKfycbyphShIWERe3UrEB_wwXX3x7Yu_5uhhiegF_3bxzu-4T-3GDXU2sc6lLA1ey7AkROEC/exec', {
             method: 'POST',
             mode: 'cors', // Evita problemas de bloqueo del navegador
             headers: {
