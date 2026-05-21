@@ -35,6 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (entries[0].isIntersecting) {
       loadCounter();
       cntObserver.disconnect();
+      // 👇 aquí metes el polling
+      setInterval(loadCounter, 10000); // cada 10 segundos
     }
   });
   cntObserver.observe(cntEl);
