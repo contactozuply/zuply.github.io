@@ -1,5 +1,5 @@
 // URL de tu Apps Script publicado
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzNUHmnG05_eTWZAkSAKE6Cz0GtPQVGTn9UDv9K1bPnkJ3ruxF9oGit8UvEuCpSUYRY3Q/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwaQUYR-n85Sj15MkkYxLkNarh4SR42tgmgP-Y-yaUuRBe6fgtm3hZhdks2Dype48LXeQ/exec";
 
 // Animación
 function animateCounter(element, target) {
@@ -31,23 +31,13 @@ function loadCounter() {
 
 // 👇 Aquí incorporas handleSignup, al mismo nivel que las demás funciones
 function handleSignup() {
-  const nombre = document.getElementById("nombre").value;
-  const email = document.getElementById("email").value;
-  const comuna = document.getElementById("comuna").value;
+  // Llamada JSONP para incrementar el contador
+  const script = document.createElement("script");
+  script.src = SCRIPT_URL + "?callback=updateCounter&signup=1";
+  document.body.appendChild(script);
 
-  fetch(SCRIPT_URL, {
-    method: "POST",
-    body: JSON.stringify({ nombre, email, comuna }),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(res => res.json())
-  .then(data => {
-    const cntEl = document.getElementById("cnt-1");
-    animateCounter(cntEl, data.count);
-
-    document.getElementById("success-state").style.display = "block";
-  })
-  .catch(err => console.error("Error incrementando contador:", err));
+  // Mostrar estado de éxito
+  document.getElementById("success-state").style.display = "block";
 }
 
 // Observador + polling
