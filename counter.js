@@ -39,5 +39,14 @@ function enviarFormulario() {
     .catch(err => console.error("Error incrementando contador:", err));
 }
 
-// Ejecutar al cargar la página
-document.addEventListener("DOMContentLoaded", loadCounter);
+// 👇 Observador: dispara la carga solo cuando el contador entra en pantalla
+document.addEventListener("DOMContentLoaded", () => {
+  const cntEl = document.getElementById("cnt-1");
+  const cntObserver = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      loadCounter();
+      cntObserver.disconnect(); // solo una vez
+    }
+  });
+  cntObserver.observe(cntEl);
+});
