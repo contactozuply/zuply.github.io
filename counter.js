@@ -29,6 +29,27 @@ function loadCounter() {
   document.body.appendChild(script);
 }
 
+// 👇 Aquí incorporas handleSignup, al mismo nivel que las demás funciones
+function handleSignup() {
+  const nombre = document.getElementById("nombre").value;
+  const email = document.getElementById("email").value;
+  const comuna = document.getElementById("comuna").value;
+
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    body: JSON.stringify({ nombre, email, comuna }),
+    headers: { "Content-Type": "application/json" }
+  })
+  .then(res => res.json())
+  .then(data => {
+    const cntEl = document.getElementById("cnt-1");
+    animateCounter(cntEl, data.count);
+
+    document.getElementById("success-state").style.display = "block";
+  })
+  .catch(err => console.error("Error incrementando contador:", err));
+}
+
 // Observador + polling
 document.addEventListener("DOMContentLoaded", () => {
   const cntEl = document.getElementById("cnt-1");
