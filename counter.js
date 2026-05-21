@@ -1,5 +1,5 @@
 // URL de tu Apps Script publicado
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyjHy6i8yulAd0Y2BMFAlQhzg8c0laecyekXWaPo7ry_iEXeGe1XV3RAZ1Q8BlnSrvbcw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyN9WrDBY9QkCJ1LKWJBT9KI_-nVhAu5sx8migvdGIru7YUSSiXTJOJ-c5Vdiy8_B8Dzg/exec";
 
 // Función para cargar el contador al entrar
 function loadCounter() {
