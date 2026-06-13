@@ -555,12 +555,45 @@ textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
   }
 
   function finish() {
+    // Captura el último estado del comentario
     answers['comentario'] = (document.getElementById('comentario')?.value || '').trim();
-    document.getElementById('s7').classList.remove('active');
-    document.getElementById('sdone').classList.add('active');
-    document.getElementById('prog').style.width = '100%';
+    
+    // Añadimos el identificador de tipo para el backend seguro
+    answers['tipo'] = 'idea';
 
-    console.log('Zuply Ideas Form:', answers);
+    // UI de Carga inmediata
+    const botonEnviar = document.getElementById('n7');
+    botonEnviar.disabled = true;
+    botonEnviar.innerHTML = 'Enviando... 🚀';
+
+    // Cambia esta constante por tu URL de Google Apps Script (la misma de formulario.js)
+    const SCRIPT_URL_SEGURO = "TU_URL_DE_APPS_SCRIPT_AQUI";
+
+    fetch(SCRIPT_URL_SEGURO, {
+      method: 'POST',
+      mode: 'cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(answers)
+    })
+    .then(response => response.json())
+    .then(resultado => {
+      if (resultado.status === 'success') {
+        // Transición visual al estado final exitoso
+        document.getElementById('s7').classList.remove('active');
+        document.getElementById('sdone').classList.add('active');
+        document.getElementById('prog').style.width = '100%';
+      } else {
+        alert('No pudimos guardar tus respuestas. Inténtalo de nuevo.');
+        botonEnviar.disabled = false;
+        botonEnviar.innerHTML = 'Enviar respuestas ✓';
+      }
+    })
+    .catch(error => {
+      console.error('Error al enviar respuestas:', error);
+      alert('Error en los servidores o falta de conexión de red.');
+      botonEnviar.disabled = false;
+      botonEnviar.innerHTML = 'Enviar respuestas ✓';
+    });
   }
 </script>
 </body>
