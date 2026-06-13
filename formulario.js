@@ -1,6 +1,5 @@
 // formulario.js - Zuply Lógica Segura y Centralizada
 
-// Reemplaza esta URL con la que copiaste de tu Google Apps Script implementado
 const SCRIPT_URL_SEGURO = "https://script.google.com/macros/s/AKfycbzxQoAhYD1jmBBdpWoqEIxcOqb8xGjMy_55mQ4_BOU1rNvP2Dyuuozxvy3G2imm-JC_qg/exec";
 
 // 1. Animación del contador
@@ -16,9 +15,14 @@ function animateCounter(el, target, duration = 1800) {
   requestAnimationFrame(step);
 }
 
-// 2. Carga dinámica del contador vía JSONP (Seguro, evita bloqueos CORS)
+// 2. Carga dinámica del contador vía JSONP (Evita bloqueos CORS de forma limpia)
 function loadCounter() {
+  // Limpiar scripts de consultas anteriores para no saturar el DOM
+  const oldScript = document.getElementById('jsonp-counter-script');
+  if (oldScript) oldScript.remove();
+
   const script = document.createElement("script");
+  script.id = 'jsonp-counter-script';
   script.src = SCRIPT_URL_SEGURO + "?callback=updateCounter&t=" + new Date().getTime();
   document.body.appendChild(script);
 }
@@ -38,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (entries[0].isIntersecting) {
         loadCounter();
         cntObserver.disconnect();
-        // Polling discreto cada 20 segundos para refrescar el valor en vivo
+        // Polling discreto cada 20 segundos
         setInterval(loadCounter, 20000);
       }
     });
@@ -63,7 +67,6 @@ async function handleSignup() {
   const email = emailInput.value.trim();
   const comuna = comunaInput.value;
 
-  // Validación de campos vacíos + Vibración estética
   if (!nombre || !email || !comuna) {
     [!nombre && 'nombre', !email && 'email', !comuna && 'comuna'].forEach(id => {
       if (!id) return;
@@ -75,7 +78,6 @@ async function handleSignup() {
     return;
   }
 
-  // Validación estricta de formato Email
   const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRx.test(email)) {
     emailInput.style.borderColor = '#ff4757';
@@ -83,13 +85,11 @@ async function handleSignup() {
     return;
   }
   
-  // Bloquear interfaz para mitigar spam/doble clic involuntario
   const boton = document.querySelector('.btn-signup');
   const textoOriginalBoton = boton.innerHTML;
   boton.innerHTML = '⌛ Procesando...';
   boton.disabled = true;
 
-  // Construcción del Payload seguro indicando el tipo 'lead'
   const datosUsuario = { tipo: 'lead', nombre, email, comuna };
 
   try {
@@ -105,7 +105,6 @@ async function handleSignup() {
     if (resultado.status === 'success') {
       document.getElementById('form-content').style.display = 'none';
       document.getElementById('success-state').style.display = 'block';
-      // Refrescar el contador inmediatamente de forma silenciosa para reflejar el nuevo lead
       loadCounter();
     } else {
       alert('Hubo un inconveniente en el procesamiento. Por favor, vuelve a intentarlo.');
