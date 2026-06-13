@@ -1,6 +1,9 @@
-// formulario.js - Lógica e información sensible fuera del HTML
+// formulario.js - Zuply Lógica Segura y Centralizada
 
-// 1. Animación del contador de la página
+// Reemplaza esta URL con la que copiaste de tu Google Apps Script implementado
+const SCRIPT_URL_SEGURO = "https://script.google.com/macros/s/AKfycbzxQoAhYD1jmBBdpWoqEIxcOqb8xGjMy_55mQ4_BOU1rNvP2Dyuuozxvy3G2imm-JC_qg/exec";
+
+// 1. Animación del contador
 function animateCounter(el, target, duration = 1800) {
   let start = 0;
   const step = (timestamp) => {
@@ -13,30 +16,54 @@ function animateCounter(el, target, duration = 1800) {
   requestAnimationFrame(step);
 }
 
-const cntEl = document.getElementById('cnt-1');
-const cntObserver = new IntersectionObserver((entries) => {
-  if (entries[0].isIntersecting) {
-    animateCounter(cntEl, 247);
-    cntObserver.disconnect();
+// 2. Carga dinámica del contador vía JSONP (Seguro, evita bloqueos CORS)
+function loadCounter() {
+  const script = document.createElement("script");
+  script.src = SCRIPT_URL_SEGURO + "?callback=updateCounter&t=" + new Date().getTime();
+  document.body.appendChild(script);
+}
+
+function updateCounter(data) {
+  const cntEl = document.getElementById('cnt-1');
+  if (cntEl && data && data.count !== undefined) {
+    animateCounter(cntEl, data.count);
   }
+}
+
+// Inicializar observador del contador al cargar el DOM
+document.addEventListener("DOMContentLoaded", () => {
+  const cntEl = document.getElementById('cnt-1');
+  if (cntEl) {
+    const cntObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadCounter();
+        cntObserver.disconnect();
+        // Polling discreto cada 20 segundos para refrescar el valor en vivo
+        setInterval(loadCounter, 20000);
+      }
+    });
+    cntObserver.observe(cntEl);
+  }
+
+  // Activar efectos de revelado al hacer scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => revealObserver.observe(el));
 });
-if (cntEl) cntObserver.observe(cntEl);
 
-// 2. Efecto de revelado al hacer scroll
-const reveals = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.1 });
-reveals.forEach(el => revealObserver.observe(el));
-
-
-// 3. FUNCIÓN PRINCIPAL: CAPTURA Y ENVÍO REAL A GOOGLE SHEETS
+// 3. ENVÍO DEL FORMULARIO DE REGISTRO DE LEADS
 async function handleSignup() {
-  const nombre = document.getElementById('nombre').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const comuna = document.getElementById('comuna').value;
+  const nombreInput = document.getElementById('nombre');
+  const emailInput = document.getElementById('email');
+  const comunaInput = document.getElementById('comuna');
 
-  // Validación de campos vacíos + Efecto de vibración (Shake)
+  const nombre = nombreInput.value.trim();
+  const email = emailInput.value.trim();
+  const comuna = comunaInput.value;
+
+  // Validación de campos vacíos + Vibración estética
   if (!nombre || !email || !comuna) {
     [!nombre && 'nombre', !email && 'email', !comuna && 'comuna'].forEach(id => {
       if (!id) return;
@@ -48,60 +75,47 @@ async function handleSignup() {
     return;
   }
 
-  // Validación de formato de correo
+  // Validación estricta de formato Email
   const emailRx = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRx.test(email)) {
-    const el = document.getElementById('email');
-    el.style.borderColor = '#ff4757';
-    setTimeout(() => el.style.borderColor = '', 1200);
+    emailInput.style.borderColor = '#ff4757';
+    setTimeout(() => emailInput.style.borderColor = '', 1200);
     return;
   }
-
-  const datosUsuario = { nombre, email, comuna };
   
-  // Bloqueamos el botón temporalmente para evitar múltiples clics
+  // Bloquear interfaz para mitigar spam/doble clic involuntario
   const boton = document.querySelector('.btn-signup');
   const textoOriginalBoton = boton.innerHTML;
   boton.innerHTML = '⌛ Procesando...';
   boton.disabled = true;
 
+  // Construcción del Payload seguro indicando el tipo 'lead'
+  const datosUsuario = { tipo: 'lead', nombre, email, comuna };
+
   try {
-    // Aquí queda guardada tu URL de Google de forma ordenada
-    const respuesta = await fetch('https://script.google.com/macros/s/AKfycbyphShIWERe3UrEB_wwXX3x7Yu_5uhhiegF_3bxzu-4T-3GDXU2sc6lLA1ey7AkROEC/exec', {
+    const respuesta = await fetch(SCRIPT_URL_SEGURO, {
       method: 'POST',
       mode: 'cors',
-      headers: {
-        'Content-Type': 'text/plain',
-      },
+      headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify(datosUsuario)
     });
 
     const resultado = await respuesta.json();
 
     if (resultado.status === 'success') {
-      // Si Google responde éxito, mostramos los fuegos artificiales 🎉
       document.getElementById('form-content').style.display = 'none';
       document.getElementById('success-state').style.display = 'block';
+      // Refrescar el contador inmediatamente de forma silenciosa para reflejar el nuevo lead
+      loadCounter();
     } else {
-      alert('Hubo un problema en el servidor. Inténtalo de nuevo.');
+      alert('Hubo un inconveniente en el procesamiento. Por favor, vuelve a intentarlo.');
       boton.innerHTML = textoOriginalBoton;
       boton.disabled = false;
     }
   } catch (error) {
-    console.error('Error:', error);
-    alert('Error de conexión. Revisa tu internet.');
+    console.error('Error en registro:', error);
+    alert('Error en la conexión. Verifica tu acceso a internet.');
     boton.innerHTML = textoOriginalBoton;
     boton.disabled = false;
   }
 }
-
-// Estilos para el efecto de vibración de errores
-const style = document.createElement('style');
-style.textContent = `@keyframes shake {
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-6px)}
-  40%{transform:translateX(6px)}
-  60%{transform:translateX(-4px)}
-  80%{transform:translateX(4px)}
-}`;
-document.head.appendChild(style);
