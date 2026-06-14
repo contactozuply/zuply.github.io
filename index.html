@@ -23,9 +23,13 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: 'Nunito', sans-serif;
-  background: var(--navy);
+  background: radial-gradient(circle at 80% 20%, rgba(33, 181, 82, 0.15) 0%, transparent 45%),
+              radial-gradient(circle at 15% 85%, rgba(33, 181, 82, 0.08) 0%, transparent 50%),
+              var(--navy);
+  background-attachment: fixed; /* El secreto: hace que el fondo se quede completamente quieto al hacer scroll */
   color: var(--white);
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 /* ─── NOISE TEXTURE OVERLAY ─── */
