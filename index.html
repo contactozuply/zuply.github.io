@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zuply — Tu despensa inteligente · Próximamente</title>
+<title>Zuply — Tu despensa inteligente</title>
+<link rel="icon" type="image/png" href="isologo verde zuply.png">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,900;1,700&display=swap\" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,10 +61,11 @@ body::before {
   letter-spacing: -0.5px;
 }
 
-.logo svg {
+/* Cambiamos .logo svg por .logo-img para darle estilo a tu imagen */
+.logo-img {
   width: 32px;
   height: 32px;
-  fill: var(--green);
+  object-fit: contain; /* Evita que la imagen se deforme o se estire */
 }
 
 .badge-prox {
@@ -451,7 +453,7 @@ body::before {
 <div class="wrapper">
   <header class="navbar">
     <div class="logo">
-      <svg viewBox="0 0 24 24"><path d="M17.5 18c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5zM7.5 18c-.83 0-1.5.67-1.5 1.5S6.67 21 7.5 21s1.5-.67 1.5-1.5S8.33 18 7.5 18zm1.73-3h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.33 5.1 16 6 16h14v-2H6.42l1.1-2z"/></svg>
+      <img src="isologo verde zuply.png" alt="Logo Zuply" class="logo-img">
       <span>Zuply</span>
     </div>
     <div class="badge-prox">🚀 Próximamente</div>
@@ -656,7 +658,7 @@ body::before {
     <div class="survey-box">
       <div class="survey-text">
         <h4>¿Quieres ayudarnos a construir la app perfecta para ti? 🛠️</h4>
-        <p>Responde 5 preguntas rápidas y ayúdanos a entender cómo compras. Te toma menos de 2 minutos y tu opinión forma Zuply directamente.</p>
+        <p>Responde 7 preguntas rápidas y ayúdanos a entender cómo compras. Te toma menos de 2 minutos y tu opinión forma Zuply directamente.</p>
       </div>
       <a href="zuply_formulario_ideas.html" class="btn-survey">📋 Responder encuesta</a>
     </div>
