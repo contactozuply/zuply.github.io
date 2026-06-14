@@ -486,6 +486,35 @@ body::before {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ─── AJUSTES EXCLUSIVOS PARA CELULARES ─── */
+@media (max-width: 768px) {
+  
+  .navbar {
+    /* Fuerza a la barra a pegarse e iniciar desde el borde absoluto del dispositivo */
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    
+    /* Cambiamos la distribución a columna para que el botón baje */
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px 20px !important;
+  }
+
+  /* Ajustes específicos para el botón "Próximamente" en móvil */
+  .badge-prox {
+    font-size: 14px !important; /* Lo hacemos más pequeño que en PC */
+    padding: 6px 12px !important;
+    align-self: center; /* Lo centra debajo del logo */
+  }
+
+  /* Compensa el espacio extra que toma la barra ahora que tiene dos pisos */
+  .hero {
+    padding-top: 180px !important; 
+  }
+}  
 </style>
 </head>
 <body>
