@@ -504,11 +504,12 @@ body::before {
     padding: 16px 20px !important;
     height: auto !important;
     min-height: unset !important;
-    z-index: 1000 !important;
+    
+    /* 1. Mantenemos un z-index alto y limpio para que actúe como escudo real */
+    z-index: 9999 !important; 
     padding-top: calc(16px + env(safe-area-inset-top)) !important;
-
-    /* 👇 El salvavidas que obliga a la navbar a ganarle al texto del scroll */
-    isolation: isolate !important;
+    
+    /* Nota: Se eliminó 'isolation' porque causaba el bug de transparencia en iOS */
   }
 
   /* El botón "Próximamente" se queda igual (centrado y pequeño) */
@@ -521,14 +522,23 @@ body::before {
   /* Mantiene el espacio del contenido para que no se tape con el menú */
   .hero {
     padding-top: 180px !important; 
-    z-index: 1 !important; /* 👈 Línea agregada */
+    position: relative !important;
+    
+    /* 2. Bajamos el hero al fondo absoluto para que jamás pase por encima de la barra */
+    z-index: 1 !important; 
   }
 
-  /* ─── EL NUEVO LÍMITE PARA EL TEXTO ─── */
-  body, html {
-    overflow-x: hidden !important;
-    overscroll-behavior-y: auto !important;
+  /* 3. LIBERAMOS EL SCROLL: El comportamiento va solo al body, NUNCA al html */
+  html {
+    overflow: visible !important;
+    height: auto !important;
   }
+
+  body {
+    overflow-x: hidden !important;
+    position: relative !important;
+  }
+}
 </style>
 </head>
 <body>
