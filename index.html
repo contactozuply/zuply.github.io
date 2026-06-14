@@ -506,6 +506,9 @@ body::before {
     min-height: unset !important;
     z-index: 1000 !important;
     padding-top: calc(16px + env(safe-area-inset-top)) !important;
+
+    /* 👇 El salvavidas que obliga a la navbar a ganarle al texto del scroll */
+    isolation: isolate !important;
   }
 
   /* El botón "Próximamente" se queda igual (centrado y pequeño) */
