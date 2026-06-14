@@ -116,6 +116,31 @@ body::before {
   margin-bottom: 32px;
 }
 
+/* Configuración del nuevo punto físico */
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #21B552;
+  border-radius: 50%;
+  display: inline-block;
+  /* 👇 Activa la palpitación de 1 segundo alternado */
+  animation: pulse 1s ease-in-out infinite alternate;
+}
+
+/* El motor de la animación con los cambios de color de tus imágenes */
+@keyframes pulse {
+  0% {
+    transform: scale(0.85);
+    background-color: #21B552; /* Verde vibrante */
+    box-shadow: 0 0 8px rgba(33, 181, 82, 0.6);
+  }
+  100% {
+    transform: scale(1.25);
+    background-color: #0C9343; /* Verde oscuro */
+    box-shadow: 0 0 2px rgba(12, 147, 67, 0.2);
+  }
+}
+
 .hero h1 {
   font-size: clamp(42px, 7vw, 88px);
   font-weight: 900;
@@ -475,7 +500,7 @@ body::before {
   </header>
 
   <section class="hero">
-    <div class="tagline">🟢 Tu despensa inteligente 🛒</div>
+    <div class="tagline"><span class="badge-dot"></span>Tu despensa inteligente 🛒</div>
     <h1>Compra más inteligente. Gasta <span>mucho menos</span>.</h1>
     <p>Zuply compara los precios de tu lista completa en los 5 principales supermercados de Chile y te dice dónde te conviene comprar. Sin letra chica, ¡fácil po!</p>
 
