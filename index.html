@@ -497,7 +497,7 @@ body::before {
     right: 0 !important;
     
     /* 👇 Esto es lo nuevo que obliga al vidrio a cubrir de lado a lado */
-    width: 100% !important;
+    width: auto !important;
     max-width: 100vw !important;
     margin: 0 !important;
     box-sizing: border-box !important;
@@ -522,6 +522,12 @@ body::before {
   /* Mantiene el espacio del contenido para que no se tape con el menú */
   .hero {
     padding-top: 180px !important; 
+  }
+
+  /* 👇 Esto le dice al navegador: "Corta cualquier texto que intente pasarse del límite de la pantalla" */
+  body, html {
+    overflow-x: hidden;
+    position: relative;
   }
 }
 </style>
