@@ -162,7 +162,7 @@ body::before {
   content: '';
   position: absolute;
   left: 0; 
-  bottom: -4%; /* Cambiado de 8px a -4% (porcentaje negativo) para que la línea baje proporcionalmente en el celular y no pise las letras */
+  bottom: -4%; /*(Check) Cambiado de 8px a -4% (porcentaje negativo) para que la línea baje proporcionalmente en el celular y no pise las letras */
   width: 100%; height: 4px;
   background: var(--green-dark);
   border-radius: 2px;
@@ -170,7 +170,7 @@ body::before {
 }
 
 .hero p {
-  font-size: clamp(16px, 2.5vw, 20px);
+  font-size: clamp(16px, 2.5vw, 25px); /* Cambiamos el limite superior de 20px a 25px */
   color: rgba(255,255,255,0.65);
   max-width: 580px;
   margin: 0 auto 48px;
