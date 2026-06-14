@@ -491,23 +491,21 @@ body::before {
 @media (max-width: 768px) {
   
   .navbar {
-    /* Mantiene las posiciones fijas y el ancho completo */
     position: fixed;
+    top: 0 !important;
     left: 0 !important;
     right: 0 !important;
     width: 100vw !important;
     z-index: 1000;
     
-    /* Mantiene tus elementos ordenados en columna y con su separación */
+    /* Cambiamos a columna */
     flex-direction: column;
     gap: 12px;
+    padding: 16px 20px !important;
 
-    /* 👇 ESTO ES LO NUEVO: Estira el vidrio hacia arriba y mantiene el logo en su lugar */
-    top: -40px !important;       
-    padding-top: 56px !important; 
-    padding-bottom: 16px !important;
-    padding-left: 20px !important;
-    padding-right: 20px !important;
+    /* 👇 AQUÍ ESTÁ EL ARREGLO: Rompe cualquier altura fija y deja que el vidrio crezca */
+    height: auto !important; 
+    min-height: unset !important;
   }
 
   /* Ajustes específicos para el botón "Próximamente" en móvil */
