@@ -492,7 +492,7 @@ body::before {
   
   .navbar {
     position: fixed !important;
-    top: -40 !important;
+    top: env(safe-area-inset-top, 0px) !important;
     left: 0 !important;
     right: 0 !important;
     
