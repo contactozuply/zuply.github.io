@@ -110,8 +110,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (entries[0].isIntersecting) {
         loadCounter();
         cntObserver.disconnect();
-        // Polling discreto cada 10 segundos
-        setInterval(loadCounter, 10000);
+        // Polling discreto cada 5 segundos
+        setInterval(loadCounter, 5000);
       }
     });
     cntObserver.observe(cntEl);
