@@ -70,7 +70,11 @@ body::after {
   width: 300px; height: 2px;
   background: linear-gradient(90deg, transparent, var(--green), transparent);
 }
-.logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; }
+.logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; text-decoration: none; }
+.logo:link, .logo:visited, .logo:hover, .logo:active {
+  text-decoration: none !important;
+}
+  
 .logo-img {
   width: 30px; height: 30px;
   object-fit: contain;
