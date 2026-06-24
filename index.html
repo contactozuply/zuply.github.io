@@ -567,45 +567,44 @@ body::before {
     <p>Zuply compara los precios de tu lista completa en los 5 principales supermercados de Chile y te dice dónde te conviene comprar. Sin letra chica, ¡fácil po!</p>
 
     <div class="form-box">
-  <div id="form-content">
-    <h3>¿Quieres ser el primero en saberlo? 👀</h3>
-    <p class="sub-f">Déjanos tus datos y te avisamos apenas Zuply esté disponible ✍️.</p>
-        
-    <div class="form-group">
-      <div class="input-row">
-        <input type="text" id="nombre" placeholder="Tu nombre" required>
-        <input type="email" id="email" placeholder="tu@email.com" required>
+      <div id="form-content">
+        <h3>¿Quieres ser el primero en saberlo? 👀</h3>
+        <p class="sub-f">Déjanos tus datos y te avisamos apenas Zuply esté disponible ✍️.</p>
+            
+        <div class="form-group">
+          <div class="input-row">
+            <input type="text" id="nombre" placeholder="Tu nombre" required>
+            <input type="email" id="email" placeholder="tu@email.com" required>
+          </div>
+    
+          <select id="region" required onchange="filtrarComunas()">
+            <option value="" disabled selected>🗺️ Selecciona tu región</option>
+            <option value="AYP">Región de Arica y Parinacota</option>
+            <option value="TAP">Región de Tarapacá</option>
+            <option value="ANF">Región de Antofagasta</option>
+            <option value="ATC">Región de Atacama</option>
+            <option value="COQ">Región de Coquimbo</option>
+            <option value="VAL">Región de Valparaíso</option>
+            <option value="RM">Región Metropolitana de Santiago</option>
+            <option value="OHI">Región del Libertador General Bernardo O'Higgins</option>
+            <option value="MAU">Región del Maule</option>
+            <option value="NUB">Región de Ñuble</option>
+            <option value="BIO">Región del Biobío</option>
+            <option value="ARA">Región de La Araucanía</option>
+            <option value="LR">Región de Los Ríos</option>
+            <option value="LL">Región de Los Lagos</option>
+            <option value="AYS">Región de Aysén del General Carlos Ibáñez del Campo</option>
+            <option value="MAG">Región de Magallanes y de la Antártica Chilena</option>
+          </select>
+              
+          <select id="comuna" required disabled>
+            <option value="" disabled selected>📍 Selecciona tu comuna</option>
+          </select>
+    
+          <button type="button" class="btn-signup" onclick="handleSignup()">🔔 Avísame cuando esté lista</button>
+        </div>
+        <div class="lock-text">🔒 Sin spam. Solo te escribimos cuando Zuply esté lista. Prometido.</div>
       </div>
-
-      <select id="region" required onchange="filtrarComunas()">
-        <option value="" disabled selected>🗺️ Selecciona tu región</option>
-        <option value="AYP">Región de Arica y Parinacota</option>
-        <option value="TAP">Región de Tarapacá</option>
-        <option value="ANF">Región de Antofagasta</option>
-        <option value="ATC">Región de Atacama</option>
-        <option value="COQ">Región de Coquimbo</option>
-        <option value="VAL">Región de Valparaíso</option>
-        <option value="RM">Región Metropolitana de Santiago</option>
-        <option value="OHI">Región del Libertador General Bernardo O'Higgins</option>
-        <option value="MAU">Región del Maule</option>
-        <option value="NUB">Región de Ñuble</option>
-        <option value="BIO">Región del Biobío</option>
-        <option value="ARA">Región de La Araucanía</option>
-        <option value="LR">Región de Los Ríos</option>
-        <option value="LL">Región de Los Lagos</option>
-        <option value="AYS">Región de Aysén del General Carlos Ibáñez del Campo</option>
-        <option value="MAG">Región de Magallanes y de la Antártica Chilena</option>
-      </select>
-          
-      <select id="comuna" required disabled>
-        <option value="" disabled selected>📍 Selecciona tu comuna</option>
-      </select>
-
-      <button type="button" class="btn-signup" onclick="handleSignup()">🔔 Avísame cuando esté lista</button>
-    </div>
-    <div class="lock-text">🔒 Sin spam. Solo te escribimos cuando Zuply esté lista. Prometido.</div>
-  </div>
-</div>
 
       <div id="success-state">
         <div class="success-icon">🎉</div>
