@@ -45,14 +45,41 @@ function filtrarComunas() {
 
 // 2. Animación del contador
 function animateCounter(el, target, duration = 1800) {
-  let start = 0;
+  // 1. Leemos lo que hay actualmente en pantalla. Si no es un número o es 0, partimos de 0.
+  // Eliminamos puntos de miles para poder parsearlo correctamente (.replace(/\./g, ''))
+  const currentText = el.textContent.replace(/\./g, '');
+  const startValue = parseInt(currentText, 10) || 0;
+  
+  // Si el nuevo total es igual o menor al que ya mostramos, no animamos nada
+  if (target <= startValue) {
+    el.textContent = target.toLocaleString('es-CL');
+    return;
+  }
+
+  // Calculamos la diferencia exacta que aumentó
+  const change = target - startValue;
+  let startTime = 0;
+
   const step = (timestamp) => {
-    if (!start) start = timestamp;
-    const progress = Math.min((timestamp - start) / duration, 1);
+    if (!startTime) startTime = timestamp;
+    const progress = Math.min((timestamp - startTime) / duration, 1);
+    
+    // Aplicamos el mismo efecto de aceleración/desaceleración (Cubic Ease Out)
     const eased = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.floor(eased * target).toLocaleString('es-CL');
-    if (progress < 1) requestAnimationFrame(step);
+    
+    // El nuevo valor es: El valor inicial + (el progreso * lo que aumentó)
+    const currentValue = Math.floor(startValue + (eased * change));
+    
+    el.textContent = currentValue.toLocaleString('es-CL');
+    
+    if (progress < 1) {
+      requestAnimationFrame(step);
+    } else {
+      // Al finalizar, aseguramos el número exacto por si los decimales varían
+      el.textContent = target.toLocaleString('es-CL');
+    }
   };
+  
   requestAnimationFrame(step);
 }
 
