@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zuply — Ayúdanos a construir la app</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #091560;
+  --navy-light: #0d1f8a;
+  --green: #21B552;
+  --green-dark: #0C9343;
+  --gray: #EDEDED;
+  --white: #ffffff;
+  --muted: rgba(255,255,255,0.45);
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--navy);
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 48px 16px 80px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed; top: -200px; right: -200px;
+  width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(33,181,82,0.13) 0%, transparent 70%);
+  pointer-events: none;
+}
+body::after {
+  content: '';
+  position: fixed; bottom: -200px; left: -200px;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(33,181,82,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.card {
+  position: relative; z-index: 1;
+  max-width: 660px; width: 100%;
+  animation: slideUp 0.6s cubic-bezier(0.16,1,0.3,1) both;
+}
+@keyframes slideUp {
+  from { opacity:0; transform:translateY(28px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.header {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 24px 24px 0 0;
+  padding: 40px 44px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content: '';
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 300px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+}
+.logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px; text-decoration: none; }
+.logo:link, .logo:visited, .logo:hover, .logo:active {
+  text-decoration: none !important;
+}
+  
+.logo-img {
+  width: 30px; height: 30px;
+  object-fit: contain;
+}
+.logo-text {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.5px;
+}
+
+.badge {
+  display:inline-flex; align-items:center; gap:7px;
+  background:rgba(33,181,82,0.12); border:1px solid rgba(33,181,82,0.28);
+  color:var(--green); font-size:12px; font-weight:700;
+  padding:5px 14px; border-radius:20px; margin-bottom:18px;
+  letter-spacing:0.3px;
+}
+.badge::before { content:''; width:6px; height:6px; background:var(--green); border-radius:50%; animation:blink 2s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.header h1 { font-size:28px; font-weight:900; color:var(--white); line-height:1.2; margin-bottom:10px; letter-spacing:-0.8px; }
+.header h1 em { color:var(--green); font-style:normal; }
+.header p { font-size:14px; color:var(--muted); line-height:1.65; max-width:420px; margin:0 auto; }
+
+.progress-wrap {
+  background: rgba(255,255,255,0.06);
+  border-left: 1px solid rgba(255,255,255,0.09);
+  border-right: 1px solid rgba(255,255,255,0.09);
+  padding: 16px 44px;
+  display: flex; align-items: center; gap: 14px;
+}
+.progress-track { flex:1; height:4px; background:rgba(255,255,255,0.08); border-radius:2px; overflow:hidden; }
+.progress-fill { height:100%; background:var(--green); border-radius:2px; transition:width 0.45s cubic-bezier(0.16,1,0.3,1); width:0%; }
+.progress-label { font-size:12px; font-weight:700; color:var(--muted); white-space:nowrap; }
+.progress-label span { color:var(--green); }
+
+.body {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-top: none;
+  border-radius: 0 0 24px 24px;
+  padding: 40px 44px 44px;
+}
+
+.step { display:none; }
+.step.active { display:block; animation:fadeSlide 0.35s ease both; }
+@keyframes fadeSlide {
+  from { opacity:0; transform:translateX(16px); }
+  to   { opacity:1; transform:translateX(0); }
+}
+
+.q-label { font-size:11px; font-weight:700; color:var(--green); letter-spacing:1.8px; text-transform:uppercase; margin-bottom:10px; }
+.q-text  { font-size:21px; font-weight:900; color:var(--white); line-height:1.3; margin-bottom:6px; letter-spacing:-0.4px; }
+.q-hint  { font-size:13px; color:var(--muted); margin-bottom:26px; line-height:1.5; }
+
+.options { display:flex; flex-direction:column; gap:10px; }
+.options.grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+.custom-opt {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: text;
+}
+.custom-opt:hover {
+  border-color: var(--green);
+}
+.opt-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 14px;
+}
+.opt-input::placeholder {
+  color: rgba(255,255,255,0.4);
+  font-style: italic;
+}
+  
+.opt {
+  display:flex; align-items:center; gap:13px;
+  padding:14px 16px;
+  border:1.5px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  cursor:pointer;
+  transition:all 0.18s ease;
+  background:rgba(255,255,255,0.03);
+  font-size:14px; font-weight:700; color:rgba(255,255,255,0.75);
+  text-align:left; width:100%;
+  font-family:'Nunito',sans-serif;
+  user-select:none;
+}
+.opt:hover { border-color:rgba(33,181,82,0.4); background:rgba(33,181,82,0.06); color:var(--white); }
+.opt.selected {
+  border-color:var(--green);
+  background:rgba(33,181,82,0.1);
+  color:var(--white);
+}
+.opt-check {
+  width:20px; height:20px; min-width:20px; border-radius:5px;
+  border:2px solid rgba(255,255,255,0.15);
+  display:flex; align-items:center; justify-content:center;
+  transition:all 0.18s; font-size:11px; color:white;
+}
+.opt.selected .opt-check { background:var(--green); border-color:var(--green); }
+.opt.selected .opt-check::after { content:'✓'; font-weight:900; }
+.opt-emoji { font-size:20px; min-width:24px; text-align:center; }
+
+.nav { display:flex; align-items:center; justify-content:space-between; margin-top:30px; gap:12px; }
+
+.btn-back {
+  background:none; border:1.5px solid rgba(255,255,255,0.12);
+  color:rgba(255,255,255,0.5); font-family:'Nunito',sans-serif;
+  font-size:13px; font-weight:700; padding:10px 18px; border-radius:50px;
+  cursor:pointer; transition:all 0.18s;
+}
+.btn-back:hover { border-color:rgba(255,255,255,0.3); color:var(--white); }
+.btn-back.invisible { visibility:hidden; }
+
+.selection-count {
+  font-size:12px; font-weight:700; color:var(--muted);
+  display:flex; align-items:center; gap:6px;
+}
+.count-badge {
+  background:rgba(33,181,82,0.15); border:1px solid rgba(33,181,82,0.25);
+  color:var(--green); padding:2px 8px; border-radius:10px;
+  font-size:11px; font-weight:900;
+  transition:all 0.2s;
+}
+
+.btn-next {
+  background:var(--green); color:white; border:none;
+  font-family:'Nunito',sans-serif; font-size:14px; font-weight:900;
+  padding:12px 26px; border-radius:50px; cursor:pointer;
+  transition:all 0.2s; display:flex; align-items:center; gap:7px;
+}
+.btn-next:hover:not(:disabled) { background:var(--green-dark); transform:translateY(-2px); box-shadow:0 10px 28px rgba(33,181,82,0.3); }
+.btn-next:disabled { background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.25); cursor:not-allowed; transform:none; box-shadow:none; }
+
+.thankyou { text-align:center; padding:16px 0 8px; animation:fadeSlide 0.5s ease both; }
+.ty-icon {
+  width:80px; height:80px; border-radius:50%;
+  background:rgba(33,181,82,0.12); border:2px solid rgba(33,181,82,0.25);
+  display:flex; align-items:center; justify-content:center;
+  font-size:36px; margin:0 auto 24px;
+}
+.thankyou h2 { font-size:26px; font-weight:900; color:var(--white); margin-bottom:10px; letter-spacing:-0.5px; }
+.thankyou p { font-size:14px; color:var(--muted); line-height:1.7; margin-bottom:28px; max-width:380px; margin-left:auto; margin-right:auto; }
+.ty-tags { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:28px; }
+.ty-tag {
+  background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+  color:rgba(255,255,255,0.6); font-size:12px; font-weight:700;
+  padding:6px 14px; border-radius:20px;
+}
+.ty-brand {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--green); color:white;
+  font-size:14px; font-weight:900; padding:12px 22px; border-radius:50px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 130px;
+  padding: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  color: var(--white);
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.65;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  margin-bottom: 8px;
+}
+textarea::placeholder { color: rgba(255,255,255,0.25); }
+textarea:focus { border-color: var(--green); background: rgba(33,181,82,0.06); }
+.char-count {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  font-weight: 700;
+  text-align: right;
+  margin-bottom: 4px;
+}
+.btn-next.always-on { opacity: 1; background: var(--green); color: white; cursor: pointer; }
+.btn-next.always-on:hover { background: var(--green-dark); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(33,181,82,0.3); }
+
+@media (max-width:520px) {
+  .header, .body, .progress-wrap { padding-left:22px; padding-right:22px; }
+  .options.grid { grid-template-columns:1fr; }
+  .header h1 { font-size:22px; }
+  .q-text { font-size:18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="header">
+    <a href="https://zuply.cl" class="logo">
+      <img src="Logos Zuply/isologo verde zuply.png" alt="Logo Zuply" class="logo-img">
+      <span class="logo-text">Zuply</span>
+    </a>
+    <div class="badge">Tu opinión construye la App</div>
+    <h1>Dinos qué quieres ver en<br><em>Zuply</em> 🛒</h1>
+    <p>Selecciona todas las opciones que te hagan sentido. No hay respuestas malas, todo lo que elijas le da forma a la App.</p>
+  </div>
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="prog"></div></div>
+    <div class="progress-label">Pregunta <span id="pnum">1</span> de 7</div>
+  </div>
+
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- Q1: FRUSTRACIONES -->
+    <div class="step active" id="s1">
+      <div class="q-label">Pregunta 1 · Frustraciones</div>
+      <div class="q-text">¿Qué te frustra más al hacer la compra del super? 😤</div>
+      <div class="q-hint">Elige todo lo que aplique a tu experiencia actual.</div>
+      <div class="options">
+        <button class="opt" onclick="toggle(this,1)"><span class="opt-check"></span><span class="opt-emoji">💸</span> No sé si estoy pagando de más</button>
+        <button class="opt" onclick="toggle(this,1)"><span class="opt-check"></span><span class="opt-emoji">🤯</span> Comparar precios entre supermercados es un caos</button>
+        <button class="opt" onclick="toggle(this,1)"><span class="opt-check"></span><span class="opt-emoji">📋</span> Siempre se me olvida algo de la lista</button>
+        <button class="opt" onclick="toggle(this,1)"><span class="opt-check"></span><span class="opt-emoji">🏠</span> Siempre llevo algo que ya tenía en casa y no lo sabía</button>
+        <button class="opt" onclick="toggle(this,1)"><span class="opt-check"></span><span class="opt-emoji">⏰</span> Pierdo demasiado tiempo planeando la compra</button>
+        <button class="opt" onclick="toggle(this,1)"><span class="opt-check"></span><span class="opt-emoji">🔄</span> Voy a varios supermercados para aprovechar ofertas y es agotador</button>
+        <div class="opt custom-opt">
+          <span class="opt-emoji">✍️</span>
+          <input type="text" name="frustracion_otro" placeholder="Escribe tu propia frustración..." class="opt-input" oninput="toggle(this,1)" />
+        </div>
+      </div>
+      <div class="nav">
+        <button class="btn-back invisible">← Atrás</button>
+        <div class="selection-count">Seleccionadas: <span class="count-badge" id="cnt1">0</span></div>
+        <button class="btn-next" id="n1" onclick="next(1)" disabled>Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Q2: FUNCIONALIDADES -->
+    <div class="step" id="s2">
+      <div class="q-label">Pregunta 2 · Funcionalidades</div>
+      <div class="q-text">¿Qué funciones te parecen más útiles para Zuply? 🛠️</div>
+      <div class="q-hint">Marca las que más te generan valor.</div>
+      <div class="options">
+        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🤖</span> IA que optimiza el precio de mi lista</button>
+        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">💾</span> Lista guardada que se actualiza sola mes a mes</button>
+        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">📵</span> Ver mi lista sin necesitar internet en el pasillo</button>
+        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">🧾</span> Escanear la boleta para registrar lo que compré</button>
+        <button class="opt" onclick="toggle(this,2)"><span class="opt-check"></span><span class="opt-emoji">📊</span> Ver cuánto gasto mes a mes y en qué</button>
+        <div class="opt custom-opt">
+          <span class="opt-emoji">✍️</span>
+          <input type="text" name="funcionalidades_otro" placeholder="Escribe la funcionalidad que te gustaría ver..." class="opt-input" oninput="toggle(this,2)" />
+        </div>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="back(2)">← Atrás</button>
+        <div class="selection-count">Seleccionadas: <span class="count-badge" id="cnt2">0</span></div>
+        <button class="btn-next" id="n2" onclick="next(2)" disabled>Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Q3: SUPERMERCADOS -->
+    <div class="step" id="s3">
+      <div class="q-label">Pregunta 3 · Supermercados</div>
+      <div class="q-text">¿Cuáles de estos supermercados quieres que Zuply compare? 🏪</div>
+      <div class="q-hint">Selecciona todos los que uses o te interesen.</div>
+      <div class="options grid">
+        <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">🔵</span> Líder</button>
+        <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">🟢</span> Jumbo</button>
+        <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">🔴</span> Unimarc</button>
+        <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">🟠</span> Santa Isabel</button>
+        <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">🟡</span> Tottus</button>
+        <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">🛒</span> Mayorista 10</button>
+        <button class="opt" onclick="toggle(this,3)"><span class="opt-check"></span><span class="opt-emoji">🏪</span> Acuenta</button>
+        <div class="opt custom-opt">
+          <span class="opt-emoji">✍️</span>
+          <input type="text" name="supermercados_otro" placeholder="Escribe el supermercado / tienda local que te gustaría ver..." class="opt-input" oninput="toggle(this,3)" />
+        </div>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="back(3)">← Atrás</button>
+        <div class="selection-count">Seleccionadas: <span class="count-badge" id="cnt3">0</span></div>
+        <button class="btn-next" id="n3" onclick="next(3)" disabled>Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Q4: NOTIFICACIONES -->
+    <div class="step" id="s4">
+      <div class="q-label">Pregunta 4 · Notificaciones</div>
+      <div class="q-text">¿De qué te gustaría que Zuply te avisara? 🔔</div>
+      <div class="q-hint">Elige los avisos que realmente abrirías.</div>
+      <div class="options">
+        <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">📉</span> Cuando baje el precio de algún producto de mi lista</button>
+        <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">🏷️</span> Cuando haya 2x1 o descuento en productos que compro</button>
+        <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">📅</span> Recordatorio semanal para planificar la compra</button>
+        <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">🏆</span> Reporte mensual de cuánto ahorré con Zuply</button>
+        <button class="opt" onclick="toggle(this,4)"><span class="opt-check"></span><span class="opt-emoji">🚨</span> Cuando haya un supermercado más barato esta semana</button>
+        <div class="opt custom-opt">
+          <span class="opt-emoji">✍️</span>
+          <input type="text" name="notificaciones_otro" placeholder="Qué otra notificación te gustaría recibir..." class="opt-input" oninput="toggle(this,4)" />
+        </div>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="back(4)">← Atrás</button>
+        <div class="selection-count">Seleccionadas: <span class="count-badge" id="cnt4">0</span></div>
+        <button class="btn-next" id="n4" onclick="next(4)" disabled>Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Q5: PREMIUM -->
+    <div class="step" id="s5">
+      <div class="q-label">Pregunta 5 · Plan Premium</div>
+      <div class="q-text">¿Qué haría que valiese la pena pagar por Zuply? 💎</div>
+      <div class="q-hint">Selecciona lo que te convencería de suscribirte.</div>
+      <div class="options">
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">♾️</span> Listas ilimitadas</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">🏠</span> Lista sugerida según la composición de mi hogar</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">🚚</span> Pedir delivery directo desde la app</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">📜</span> Historial completo de mis compras y listas anteriores</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">📉</span> Alertas de precios en tiempo real</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">🤝</span> Compartir la lista con mi núcleo familiar</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">👩🏻‍🍳🧑🏻‍🍳</span> Listas de compras basadas en recetas de cocina</button>
+        <button class="opt" onclick="toggle(this,5)"><span class="opt-check"></span><span class="opt-emoji">🆓</span> Solo la usaría si es completamente gratis</button>
+        <div class="opt custom-opt">
+          <span class="opt-emoji">✍️</span>
+          <input type="text" name="premium_otro" placeholder="Qué otra función premium crees que vale la pena pagar..." class="opt-input" oninput="toggle(this,5)" />
+        </div>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="back(5)">← Atrás</button>
+        <div class="selection-count">Seleccionadas: <span class="count-badge" id="cnt5">0</span></div>
+        <button class="btn-next" id="n5" onclick="next(5)" disabled>Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Q6: DISPOSITIVO -->
+    <div class="step" id="s6">
+      <div class="q-label">Pregunta 6 · Dispositivo</div>
+      <div class="q-text">¿Desde dónde usarías Zuply principalmente? 📱</div>
+      <div class="q-hint">Elige todos los que apliquen.</div>
+      <div class="options grid">
+        <button class="opt" onclick="toggle(this,6)"><span class="opt-check"></span><span class="opt-emoji">🍏</span> iPhone (iOS)</button>
+        <button class="opt" onclick="toggle(this,6)"><span class="opt-check"></span><span class="opt-emoji">🤖</span> Android</button>
+        <button class="opt" onclick="toggle(this,6)"><span class="opt-check"></span><span class="opt-emoji">💻</span> Computador / web</button>
+        <button class="opt" onclick="toggle(this,6)"><span class="opt-check"></span><span class="opt-emoji">📟</span> Tablet</button>
+      </div>
+      <div class="nav">
+        <button class="btn-back" onclick="back(6)">← Atrás</button>
+        <div class="selection-count">Seleccionadas: <span class="count-badge" id="cnt6">0</span></div>
+        <button class="btn-next" id="n6" onclick="next(6)" disabled>Siguiente →</button>
+      </div>
+    </div>
+
+    <!-- Q7: COMENTARIO LIBRE -->
+    <div class="step" id="s7">
+      <div class="q-label">Pregunta 7 · Tu voz</div>
+      <div class="q-text">¿Algo más que quieras contarnos? 💬</div>
+      <div class="q-hint">Una idea, una crítica, un sueño de app — todo vale. Este campo es opcional, pero es donde más aprendemos.</div>
+      <textarea
+        id="comentario"
+        placeholder="Ej: me encantaría que Zuply me dijera cuándo conviene comprar en mayorista vs super normal, o que pueda planificar la quincena completa..."
+        oninput="checkComment()"
+      ></textarea>
+      <div class="char-count"><span id="charnum">0</span> / 500 caracteres</div>
+      <div class="nav">
+        <button class="btn-back" onclick="back(7)">← Atrás</button>
+        <div class="selection-count" style="visibility:hidden">—</div>
+        <button class="btn-next always-on" id="n7" onclick="finish()">Enviar respuestas ✓</button>
+      </div>
+    </div>
+
+    <!-- THANK YOU -->
+    <div class="step" id="sdone">
+      <div class="thankyou">
+        <div class="ty-icon">🚀</div>
+        <h2>¡Gracias por formar parte de Zuply!</h2>
+        <p>Tu opinión quedó registrada y va directo al equipo que está construyendo la app. Esto es exactamente lo que necesitamos para construir algo que valga la pena.</p>
+        <div class="ty-tags" id="ty-tags"></div>
+        <div class="ty-brand"><span>🛒</span> Zuply · Tu despensa inteligente</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const TOTAL = 7;
+  const answers = {};
+
+  function toggle(el, q) {
+    const container = document.getElementById('s' + q);
+    if (!container) return;
+    
+    const optionsDiv = container.querySelector('.options');
+    const textInput = optionsDiv.querySelector('.opt-input');
+    
+    // Si el evento viene de interactuar con el Input de texto directo
+    if (el.tagName === "INPUT") {
+      updateAnswersAndCounter(optionsDiv, textInput, q);
+      return;
+    }
+
+    // Lógica para los botones comunes (.opt)
+    el.classList.toggle('selected');
+    updateAnswersAndCounter(optionsDiv, textInput, q);
+  }
+
+  function updateAnswersAndCounter(optionsDiv, textInput, q) {
+    const selectedBtns = optionsDiv.querySelectorAll('.opt.selected');
+    let cnt = selectedBtns.length;
+    
+    const answersList = Array.from(selectedBtns).map(o => o.textContent.trim().replace(/\s+/g,' '));
+    
+    if (textInput && textInput.value.trim() !== "") {
+      cnt += 1;
+      answersList.push(textInput.value.trim());
+    }
+    
+    document.getElementById('cnt' + q).textContent = cnt;
+    document.getElementById('n' + q).disabled = cnt === 0;
+    answers['q' + q] = answersList;
+  }
+
+  function next(q) {
+    document.getElementById('s' + q).classList.remove('active');
+    document.getElementById('s' + (q + 1)).classList.add('active');
+    setProgress(q + 1);
+  }
+
+  function back(q) {
+    document.getElementById('s' + q).classList.remove('active');
+    document.getElementById('s' + (q - 1)).classList.add('active');
+    setProgress(q - 1);
+  }
+
+  function setProgress(step) {
+    const pct = ((step - 1) / TOTAL) * 100;
+    document.getElementById('prog').style.width = pct + '%';
+    document.getElementById('pnum').textContent = step <= TOTAL ? step : TOTAL;
+  }
+
+  function checkComment() {
+    const val = document.getElementById('comentario').value;
+    const len = val.length;
+    document.getElementById('charnum').textContent = len;
+    if (len > 500) {
+      document.getElementById('comentario').value = val.slice(0, 500);
+      document.getElementById('charnum').textContent = 500;
+    }
+    answers['comentario'] = val.trim();
+  }
+
+  function finish() {
+    answers['comentario'] = (document.getElementById('comentario')?.value || '').trim();
+    answers['tipo'] = 'idea';
+
+    const botonEnviar = document.getElementById('n7');
+    botonEnviar.disabled = true;
+    botonEnviar.innerHTML = 'Enviando... 🚀';
+
+    const SCRIPT_URL_SEGURO = "https://script.google.com/macros/s/AKfycbzxQoAhYD1jmBBdpWoqEIxcOqb8xGjMy_55mQ4_BOU1rNvP2Dyuuozxvy3G2imm-JC_qg/exec";
+
+    fetch(SCRIPT_URL_SEGURO, {
+      method: 'POST',
+      mode: 'cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(answers)
+    })
+    .then(response => response.json())
+    .then(resultado => {
+      if (resultado.status === 'success') {
+        document.getElementById('s7').classList.remove('active');
+        document.getElementById('sdone').classList.add('active');
+        document.getElementById('prog').style.width = '100%';
+      } else {
+        alert('No pudimos guardar tus respuestas. Inténtalo de nuevo.');
+        botonEnviar.disabled = false;
+        botonEnviar.innerHTML = 'Enviar respuestas ✓';
+      }
+    })
+    .catch(error => {
+      console.error('Error al enviar respuestas:', error);
+      alert('Error en los servidores o falta de conexión de red.');
+      botonEnviar.disabled = false;
+      botonEnviar.innerHTML = 'Enviar respuestas ✓';
+    });
+  }
+</script>
+</body>
+</html>
