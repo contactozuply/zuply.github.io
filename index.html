@@ -567,73 +567,45 @@ body::before {
     <p>Zuply compara los precios de tu lista completa en los 5 principales supermercados de Chile y te dice dónde te conviene comprar. Sin letra chica, ¡fácil po!</p>
 
     <div class="form-box">
-      <div id="form-content">
-        <h3>¿Quieres ser el primero en saberlo? 👀</h3>
-        <p class="sub-f">Déjanos tus datos y te avisamos apenas Zuply esté disponible ✍️.</p>
+  <div id="form-content">
+    <h3>¿Quieres ser el primero en saberlo? 👀</h3>
+    <p class="sub-f">Déjanos tus datos y te avisamos apenas Zuply esté disponible ✍️.</p>
         
-        <div class="form-group">
-          <div class="input-row">
-            <input type="text" id="nombre" placeholder="Tu nombre" required>
-            <input type="email" id="email" placeholder="tu@email.com" required>
-          </div>
-          <select id="comuna" required>
-            <option value="" disabled selected>📍 Selecciona tu comuna</option>
-            <option value="Alhué">Alhué</option>
-            <option value="Buin">Buin</option>
-            <option value="Calera de Tango">Calera de Tango</option>
-            <option value="Cerrillos">Cerrillos</option>
-            <option value="Cerro Navia">Cerro Navia</option>
-            <option value="Colina">Colina</option>
-            <option value="Conchalí">Conchalí</option>
-            <option value="El Bosque">El Bosque</option>
-            <option value="El Monte">El Monte</option>
-            <option value="Estación Central">Estación Central</option>
-            <option value="Huechuraba">Huechuraba</option>
-            <option value="Independencia">Independencia</option>
-            <option value="Isla de Maipo">Isla de Maipo</option>
-            <option value="La Cisterna">La Cisterna</option>
-            <option value="La Florida">La Florida</option>
-            <option value="La Granja">La Granja</option>
-            <option value="La Pintana">La Pintana</option>
-            <option value="La Reina">La Reina</option>
-            <option value="Lampa">Lampa</option>
-            <option value="Las Condes">Las Condes</option>
-            <option value="Lo Barnechea">Lo Barnechea</option>
-            <option value="Lo Espejo">Lo Espejo</option>
-            <option value="Lo Prado">Lo Prado</option>
-            <option value="Macul">Macul</option>
-            <option value="Maipú">Maipú</option>
-            <option value="Melipilla">Melipilla</option>
-            <option value="Ñuñoa">Ñuñoa</option>
-            <option value="Padre Hurtado">Padre Hurtado</option>
-            <option value="Paine">Paine</option>
-            <option value="Pedro Aguirre Cerda">Pedro Aguirre Cerda</option>
-            <option value="Peñaflor">Peñaflor</option>
-            <option value="Peñalolén">Peñalolén</option>
-            <option value="Pirque">Pirque</option>
-            <option value="Providencia">Providencia</option>
-            <option value="Pudahuel">Pudahuel</option>
-            <option value="Puente Alto">Puente Alto</option>
-            <option value="Quilicura">Quilicura</option>
-            <option value="Quinta Normal">Quinta Normal</option>
-            <option value="Recoleta">Recoleta</option>
-            <option value="Renca">Renca</option>
-            <option value="San Bernardo">San Bernardo</option>
-            <option value="San Joaquín">San Joaquín</option>
-            <option value="San José de Maipo">San José de Maipo</option>
-            <option value="San Miguel">San Miguel</option>
-            <option value="San Pedro">San Pedro</option>
-            <option value="San Ramón">San Ramón</option>
-            <option value="Santiago">Santiago</option>
-            <option value="Talagante">Talagante</option>
-            <option value="Tiltil">Tiltil</option>
-            <option value="Vitacura">Vitacura</option>
-            <option value="Regiones / Fuera de RM">Otras Regiones de Chile</option>
-          </select>
-          <button type="button" class="btn-signup" onclick="handleSignup()">🔔 Avísame cuando esté lista</button>
-        </div>
-        <div class="lock-text">🔒 Sin spam. Solo te escribimos cuando Zuply esté lista. Prometido.</div>
+    <div class="form-group">
+      <div class="input-row">
+        <input type="text" id="nombre" placeholder="Tu nombre" required>
+        <input type="email" id="email" placeholder="tu@email.com" required>
       </div>
+
+      <select id="region" required onchange="filtrarComunas()">
+        <option value="" disabled selected>🗺️ Selecciona tu región</option>
+        <option value="AYP">Región de Arica y Parinacota</option>
+        <option value="TAP">Región de Tarapacá</option>
+        <option value="ANF">Región de Antofagasta</option>
+        <option value="ATC">Región de Atacama</option>
+        <option value="COQ">Región de Coquimbo</option>
+        <option value="VAL">Región de Valparaíso</option>
+        <option value="RM">Región Metropolitana de Santiago</option>
+        <option value="OHI">Región del Libertador General Bernardo O'Higgins</option>
+        <option value="MAU">Región del Maule</option>
+        <option value="NUB">Región de Ñuble</option>
+        <option value="BIO">Región del Biobío</option>
+        <option value="ARA">Región de La Araucanía</option>
+        <option value="LR">Región de Los Ríos</option>
+        <option value="LL">Región de Los Lagos</option>
+        <option value="AYS">Región de Aysén del General Carlos Ibáñez del Campo</option>
+        <option value="MAG">Región de Magallanes y de la Antártica Chilena</option>
+      </select>
+          
+      <select id="comuna" required disabled>
+        <option value="" disabled selected>📍 Selecciona tu comuna</option>
+      </select>
+
+      <button type="button" class="btn-signup" onclick="handleSignup()">🔔 Avísame cuando esté lista</button>
+    </div>
+    <div class="lock-text">🔒 Sin spam. Solo te escribimos cuando Zuply esté lista. Prometido.</div>
+  </div>
+</div>
 
       <div id="success-state">
         <div class="success-icon">🎉</div>
