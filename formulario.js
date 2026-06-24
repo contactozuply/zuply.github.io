@@ -163,30 +163,36 @@ async function handleSignup() {
   boton.disabled = true;
 
   try {
-    // Convertimos los datos a URLSearchParams para saltarnos de forma limpia el bloqueo de CORS
-    const params = new URLSearchParams();
-    params.append('tipo', 'lead');
-    params.append('nombre', nombre);
-    params.append('email', email);
-    params.append('region', regionText);
-    params.append('comuna', comuna);
+    // 1. Creamos el objeto estructurado en formato JSON
+    const datosFormulario = {
+      tipo: 'lead',
+      nombre: nombre,
+      email: email,
+      region: regionText,
+      comuna: comuna
+    };
 
+    // 2. Lo enviamos como JSON real al Apps Script
     await fetch(SCRIPT_URL_SEGURO, {
       method: 'POST',
-      mode: 'no-cors', // 👈 'no-cors' garantiza que los datos viajen sin restricciones del navegador
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: params.toString()
+      mode: 'cors', 
+      headers: { 
+        'Content-Type': 'text/plain;charset=utf-8' // Clave para evitar bloqueos de CORS en Google
+      },
+      body: JSON.stringify(datosFormulario)
     });
 
-    // Como 'no-cors' devuelve una respuesta opaca (status 0), asumimos éxito si no cae al catch
+    // Cambiar estados visuales (Éxito)
     document.getElementById('form-content').style.display = 'none';
     document.getElementById('success-state').style.display = 'block';
     if (typeof loadCounter === 'function') loadCounter();
 
-  } catch (error) {
+  } 
+  
+  catch (error) {
     console.error('Error en registro:', error);
     alert('Error en la conexión. Verifica tu acceso a internet.');
     boton.innerHTML = textoOriginalBoton;
     boton.disabled = false;
-  }
+  } 
 }
