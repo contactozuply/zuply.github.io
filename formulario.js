@@ -2,7 +2,48 @@
 
 const SCRIPT_URL_SEGURO = "https://script.google.com/macros/s/AKfycbzxQoAhYD1jmBBdpWoqEIxcOqb8xGjMy_55mQ4_BOU1rNvP2Dyuuozxvy3G2imm-JC_qg/exec";
 
-// 1. Animación del contador
+// 1. BASE DE DATOS NACIONAL Y FILTRADO DINÁMICO ───
+// 👇 Diccionario de datos real con las 16 regiones y todas las comunas de Chile
+const comunasPorRegion = {
+  "AYP": ["Arica", "Camarones", "General Lagos", "Putre"],
+  "TAP": ["Alto Hospicio", "Iquique", "Camiña", "Colchane", "Huara", "Pica", "Pozo Almonte"],
+  "ANF": ["Antofagasta", "Mejillones", "Sierra Gorda", "Taltal", "Calama", "Ollagüe", "San Pedro de Atacama", "María Elena", "Tocopilla"],
+  "ATC": ["Chañaral", "Diego de Almagro", "Caldera", "Copiapó", "Tierra Amarilla", "Alto del Carmen", "Freirina", "Huasco", "Vallenar"],
+  "COQ": ["Canela", "Illapel", "Los Vilos", "Salamanca", "Andacollo", "Coquimbo", "La Higuera", "La Serena", "Paihuano", "Vicuña", "Combarbalá", "Monte Patria", "Ovalle", "Punitaqui", "Río Hurtado"],
+  "VAL": ["Isla de Pascua", "Calle Larga", "Los Andes", "Rinconada", "San Esteban", "Limache", "Olmué", "Quilpué", "Villa Alemana", "Cabildo", "La Ligua", "Papudo", "Petorca", "Zapallar", "Hijuelas", "La Calera", "Nogales", "Quillota", "San Antonio", "Algarrobo", "Cartagena", "El Quisco", "El Tabo", "Santo Domingo", "Catemu", "Llaillay", "Panquehue", "Putaendo", "San Felipe", "Santa María", "Casablanca", "Juan Fernández", "Puchuncaví", "Quintero", "Valparaíso", "Viña del Mar", "Concón"],
+  "RM": ["Alhué", "Buin", "Calera de Tango", "Cerrillos", "Cerro Navia", "Colina", "Conchalí", "El Bosque", "El Monte", "Estación Central", "Huechuraba", "Independencia", "Isla de Maipo", "La Cisterna", "La Florida", "La Granja", "La Pintana", "La Reina", "Lampa", "Las Condes", "Lo Barnechea", "Lo Espejo", "Lo Prado", "Macul", "Maipú", "Melipilla", "Ñuñoa", "Padre Hurtado", "Paine", "Pedro Aguirre Cerda", "Peñaflor", "Peñalolén", "Pirque", "Providencia", "Pudahuel", "Puente Alto", "Quilicura", "Quinta Normal", "Recoleta", "Renca", "San Bernardo", "San Joaquín", "San José de Maipo", "San Miguel", "San Pedro", "San Ramón", "Santiago", "Talagante", "Tiltil", "Vitacura"],
+  "OHI": ["Rancagua", "Codegua", "Coinco", "Coltauco", "Doñihue", "Graneros", "Las Cabras", "Machalí", "Malloa", "Mostazal", "Olivar", "Peumo", "Pichidegua", "Quinta de Tilcoco", "Rengo", "Requínoa", "San Vicente", "La Estrella", "Litueche", "Marchihue", "Navidad", "Paredones", "Pichilemu", "Chépica", "Chimbarongo", "Lolol", "Nancagua", "Palmilla", "Peralillo", "Placilla", "Pumanque", "San Fernando", "Santa Cruz"],
+  "MAU": ["Talca", "Constitución", "Curepto", "Empedrado", "Maule", "Pelarco", "Pencahue", "Río Claro", "San Clemente", "San Rafael", "Cauquenes", "Chanco", "Pelluhue", "Curicó", "Hualañé", "Licantén", "Molina", "Rauco", "Romeral", "Sagrada Familia", "Teno", "Vichuquén", "Linares", "Colbún", "Longaví", "Parral", "Retiro", "San Javier", "Villa Alegre", "Yerbas Buenas"],
+  "NUB": ["Chillán", "Bulnes", "Chillán Viejo", "El Carmen", "Pemuco", "Pinto", "Quillón", "San Ignacio", "Yungay", "Quirihue", "Cobquecura", "Coelemu", "Ninhue", "Portezuelo", "Ránquil", "Trehuaco", "San Carlos", "Coihueco", "San Fabián", "San Nicolás"],
+  "BIO": ["Concepción", "Coronel", "Chiguayante", "Florida", "Hualpén", "Hualqui", "Lota", "Penco", "San Pedro de la Paz", "Santa Juana", "Talcahuano", "Tomé", "Lebu", "Arauco", "Cañete", "Contulmo", "Curanilahue", "Los Álamos", "Tirúa", "Los Ángeles", "Antuco", "Cabrero", "Laja", "Mulchén", "Nacimiento", "Negrete", "Quilaco", "Quilleco", "San Rosendo", "Santa Bárbara", "Tucapel", "Yumbel", "Alto Biobío"],
+  "ARA": ["Temuco", "Carahue", "Cunco", "Curarrehue", "Freire", "Galvarino", "Gorbea", "Lautaro", "Loncoche", "Melipeuco", "Nueva Imperial", "Padre Las Casas", "Perquenco", "Pitrufquén", "Pucón", "Saavedra", "Teodoro Schmidt", "Toltén", "Vilcún", "Villarrica", "Cholchol", "Angol", "Collipulli", "Curacautín", "Ercilla", "Lonquimay", "Los Sauces", "Lumaco", "Purén", "Renaico", "Traiguén", "Victoria"],
+  "LR": ["Valdivia", "Corral", "Lanco", "Los Lagos", "Máfil", "Mariquina", "Paillaco", "Panguipulli", "La Unión", "Futrono", "Lago Ranco", "Río Bueno"],
+  "LL": ["Puerto Montt", "Calbuco", "Cochamó", "Fresia", "Frutillar", "Los Muermos", "Llanquihue", "Maullín", "Puerto Varas", "Castro", "Ancud", "Chonchi", "Curaco de Vélez", "Dalcahue", "Puqueldón", "Queilén", "Quellón", "Quemchi", "Quinchao", "Osorno", "Puerto Octay", "Purranque", "Puyehue", "Río Negro", "San Juan de la Costa", "San Pablo", "Chaitén", "Futaleufú", "Hualaihué", "Palena"],
+  "AYS": ["Coyhaique", "Lago Verde", "Aisén", "Cisnes", "Guaitecas", "Cochrane", "O'Higgins", "Tortel", "Chile Chico", "Río Ibáñez"],
+  "MAG": ["Punta Arenas", "Laguna Blanca", "Río Verde", "San Gregorio", "Cabo de Hornos", "Antártica", "Porvenir", "Primavera", "Timaukel", "Natales", "Torres del Paine"]
+};
+
+function filtrarComunas() {
+  const regionSelect = document.getElementById("region");
+  const comunaSelect = document.getElementById("comuna");
+  const regionSeleccionada = regionSelect.value;
+
+  comunaSelect.innerHTML = '<option value="" disabled selected>📍 Selecciona tu comuna</option>';
+
+  if (regionSeleccionada && comunasPorRegion[regionSeleccionada]) {
+    comunaSelect.disabled = false;
+    comunasPorRegion[regionSeleccionada].forEach(comuna => {
+      const option = document.createElement("option");
+      option.value = comuna;
+      option.textContent = comuna;
+      comunaSelect.appendChild(option);
+    });
+  } else {
+    comunaSelect.disabled = true;
+  }
+}
+
+// 2. Animación del contador
 function animateCounter(el, target, duration = 1800) {
   let start = 0;
   const step = (timestamp) => {
@@ -15,7 +56,7 @@ function animateCounter(el, target, duration = 1800) {
   requestAnimationFrame(step);
 }
 
-// 2. Carga dinámica del contador vía JSONP (Evita bloqueos CORS de forma limpia)
+// 3. Carga dinámica del contador vía JSONP (Evita bloqueos CORS de forma limpia)
 function loadCounter() {
   // Limpiar scripts de consultas anteriores para no saturar el DOM
   const oldScript = document.getElementById('jsonp-counter-script');
@@ -57,18 +98,21 @@ document.addEventListener("DOMContentLoaded", () => {
   reveals.forEach(el => revealObserver.observe(el));
 });
 
-// 3. ENVÍO DEL FORMULARIO DE REGISTRO DE LEADS
+// 4. ENVÍO DEL FORMULARIO DE REGISTRO DE LEADS ───
 async function handleSignup() {
   const nombreInput = document.getElementById('nombre');
   const emailInput = document.getElementById('email');
+  const regionInput = document.getElementById('region'); // 👈 Agregada la captura del elemento Región
   const comunaInput = document.getElementById('comuna');
 
   const nombre = nombreInput.value.trim();
   const email = emailInput.value.trim();
+  const regionText = regionInput.options[regionInput.selectedIndex]?.text || ''; // 👈 Extrae el nombre de la región legible (ej: "Región Metropolitana de Santiago")
   const comuna = comunaInput.value;
 
-  if (!nombre || !email || !comuna) {
-    [!nombre && 'nombre', !email && 'email', !comuna && 'comuna'].forEach(id => {
+  // 👇 Modificada la validación para incluir la verificación de la región
+  if (!nombre || !email || !regionInput.value || !comuna) {
+    [!nombre && 'nombre', !email && 'email', !regionInput.value && 'region', !comuna && 'comuna'].forEach(id => {
       if (!id) return;
       const el = document.getElementById(id);
       el.style.borderColor = '#ff4757';
@@ -90,7 +134,8 @@ async function handleSignup() {
   boton.innerHTML = '⌛ Procesando...';
   boton.disabled = true;
 
-  const datosUsuario = { tipo: 'lead', nombre, email, comuna };
+  // 👇 El objeto datosUsuario ahora incluye la propiedad 'region' procesada para enviarse a Google Sheets
+  const datosUsuario = { tipo: 'lead', nombre, email, region: regionText, comuna };
 
   try {
     const respuesta = await fetch(SCRIPT_URL_SEGURO, {
