@@ -445,7 +445,9 @@ body::before {
   object-fit: contain;
 }
 
-
+/* ==========================================================
+   💻 SE QUEDA IGUAL (Mantiene tu PC perfecto)
+   ========================================================== */
 /* selectores específicos usando el atributo alt del HTML para agrandar individualmente */
 .brands-row img[alt="Lider"] {
   transform: scale(1.40); /* Lo agranda un 40% para que compita en peso con Jumbo */
@@ -466,7 +468,24 @@ body::before {
   transform: scale(1.00);
   margin-left: -25px;
 }
+
+/* ==========================================================
+   📱 ARREGLO EXCLUSIVO PARA EL CELULAR 
+   ========================================================== */
+@media (max-width: 768px) {
+  /* Reseteamos los márgenes a 0 para que no se encima un logo con otro */
+  .brands-row img[alt="Santa Isabel"],
+  .brands-row img[alt="Tottus"] {
+    margin-left: 0px;
+  }
   
+  /* Ajuste opcional: Si encuentras que Líder se ve un poco chico en 
+     el celular, puedes cambiarle la escala acá sin romper el PC */
+  .brands-row img[alt="Lider"] {
+    transform: scale(1.40); /* Puedes probar con 1.50 si quieres que resalte más en el fono */
+  }
+}
+
 .survey-box {
   background: linear-gradient(135deg, rgba(13,31,122,0.6) 0%, rgba(9,21,96,0.6) 100%);
   border: 1px solid rgba(255, 255, 255, 0.06);
