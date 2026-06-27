@@ -443,7 +443,14 @@ body::before {
 .brands-row img {
   height: clamp(24px, 4vw, 36px);
   object-fit: contain;
-  opacity: none;
+}
+
+/* selectores específicos usando el atributo alt del HTML para agrandar individualmente */
+.brands-row img[alt="Lider"] {
+  transform: scale(1.25); /* Lo agranda un 25% para que compita en peso con Jumbo */
+}
+.brands-row img[alt="Unimarc"] {
+  transform: scale(1.15); /* Un empujón leve por si su caja se ve compacta */
 }
 
 .survey-box {
@@ -723,7 +730,7 @@ body::before {
       <img src="logos/lider.png" alt="Lider">
       <img src="logos/jumbo.png" alt="Jumbo">
       <img src="logos/unimarc.png" alt="Unimarc">
-      <img src="logos/santaisabel2.png" alt="Santa Isabel">
+      <img src="logos/santaisabel.png" alt="Santa Isabel">
       <img src="logos/tottus.png" alt="Tottus">
     </div>
   
